@@ -3,15 +3,61 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import User from './models/User.js';  // <-- Import model
+const connectDB = require('./config/db');
 
+// Import Models
+require('./models/User');
+require('./models/Admin');
+require('./models/Student');
+require('./models/ProjectGroup');
+require('./models/Document');
+
+//connect to Database
+connectDB();
 
 dotenv.config();
 const app = express();
+
+//middleware
 app.use(cors());
-app.use(express.json());
+
+//app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/admin', require('./routes/admin'));
+app.use('/api/students', require('./routes/students'));
+app.use('/api/projects', require('./routes/projectGroups'));
+app.use('/api/documents', require('./routes/documents'));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    success: false, 
+    message: 'Something went wrong!',
+    error: process.env.NODE_ENV === 'development' ? err.message : {}
+  });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ 
+    success: false, 
+    message: 'Route not found' 
+  });
+});
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
+
+//done by me...
+
+// app.listen(PORT, () => {
+//   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+// });
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -50,3 +96,5 @@ app.post('/api/login', (req, res) => {
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));
+
+module.exports = app;

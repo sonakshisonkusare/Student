@@ -7,4 +7,4 @@ const generateToken = (userData) => {
   return jwt.sign(userData, secretKey, { expiresIn: '1h' });
 };
 
-module.exports = generateToken;
+export default generateToken
