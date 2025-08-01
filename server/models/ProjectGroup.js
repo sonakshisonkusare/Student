@@ -1,5 +1,6 @@
 // models/ProjectGroup.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+const router = express.Router();
 
 const projectGroupSchema = new mongoose.Schema({
   projectGroupId: { 

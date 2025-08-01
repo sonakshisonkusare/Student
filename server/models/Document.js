@@ -1,5 +1,6 @@
 // models/Document.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+const router = express.Router();
 
 const documentSchema = new mongoose.Schema({
   documentId: { 

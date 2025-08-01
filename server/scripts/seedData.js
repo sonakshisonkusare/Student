@@ -1,10 +1,12 @@
 // scripts/seedData.js
-const mongoose = require('mongoose');
-const User = require('../models/User');
-const Admin = require('../models/Admin');
-const Student = require('../models/Student');
-const ProjectGroup = require('../models/ProjectGroup');
-require('dotenv').config();
+import mongoose from 'mongoose';
+import User from '../models/User.js';
+import Admin from '../models/Admin.js';
+import Student from '../models/Student.js';
+import ProjectGroup from '../models/ProjectGroup.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const seedData = async () => {
   try {

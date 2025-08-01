@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import User from './models/User.js';  // <-- Import model
-const connectDB = require('./config/db');
+import connectDB from './config/db.js';
 
 // Import Models
-require('./models/User');
-require('./models/Admin');
-require('./models/Student');
-require('./models/ProjectGroup');
-require('./models/Document');
+import './models/User.js';
+import './models/Admin.js';
+import './models/Student.js';
+import './models/ProjectGroup.js';
+import './models/Document.js';
 
 //connect to Database
 connectDB();
@@ -26,11 +26,18 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/admin', require('./routes/admin'));
-app.use('/api/students', require('./routes/students'));
-app.use('/api/projects', require('./routes/projectGroups'));
-app.use('/api/documents', require('./routes/documents'));
+import authRoutes from './routes/auth.js';
+import adminRoutes from './routes/admin.js';
+import studentRoutes from './routes/students.js';
+import projectRoutes from './routes/projectGroups.js';
+import documentRoutes from './routes/documents.js';
+
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/students', studentRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/documents', documentRoutes);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

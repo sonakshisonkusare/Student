@@ -1,5 +1,6 @@
 // models/Student.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+const router = express.Router();
 
 const studentSchema = new mongoose.Schema({
   userId: { 
